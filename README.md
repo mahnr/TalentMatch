@@ -105,6 +105,34 @@ For a different backend URL, set `VITE_API_URL` in a local frontend environment 
 VITE_API_URL=http://127.0.0.1:8000
 ```
 
+## Deploy
+
+The repository includes deployment configuration for a Vercel frontend and Render API.
+
+### 1. Deploy the API to Render
+
+1. Sign in to [Render](https://render.com/) and create a new **Blueprint** from the GitHub repository `mahnr/TalentMatch`.
+2. Render reads `render.yaml` and creates the `talentmatch-api` web service.
+3. Wait for the service to finish deploying. Check `https://YOUR-RENDER-SERVICE.onrender.com/api/health`; it should return `{"status":"ok"}`.
+4. If using Gemini, add `GEMINI_API_KEY` in the Render service's **Environment** settings. This is optional; without it, the deterministic matcher is used.
+
+### 2. Deploy the frontend to Vercel
+
+1. Import `mahnr/TalentMatch` into [Vercel](https://vercel.com/) as a new project.
+2. Set the project **Root Directory** to `frontend`.
+3. Add the environment variable `VITE_API_URL` with the Render service URL, for example `https://talentmatch-api.onrender.com` (no trailing slash).
+4. Deploy. `frontend/vercel.json` configures the Vite build and client-side route fallback.
+
+### 3. Allow the Vercel site in the API CORS settings
+
+After Vercel gives you the deployed site URL, open the Render service's **Environment** settings and set `CORS_ORIGINS` to a comma-separated list containing the exact Vercel origin and local development origins:
+
+```text
+https://YOUR-PROJECT.vercel.app,http://localhost:5173,http://127.0.0.1:5173
+```
+
+Use only the origin (scheme and hostname), with no path or trailing slash. Save the setting and wait for Render to redeploy. Check the live Vercel site and its analysis, jobs, and company discovery pages.
+
 ## Using TalentMatch
 
 1. Choose **Start Analysis**.
