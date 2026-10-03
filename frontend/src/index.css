@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased font-sans;
+  }
+}
+
+@keyframes landing-float {
+  0%, 100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@keyframes landing-twinkle {
+  0%, 100% {
+    opacity: 0.65;
+    scale: 1;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.18;
+  }
+}
+
+.landing-float {
+  animation: landing-float 4s ease-in-out infinite;
+}
+
+.landing-float-delay {
+  animation-delay: -1.4s;
+}
+
+.landing-float-slow {
+  animation-duration: 4.8s;
+  animation-delay: -2.3s;
+}
+
+.landing-twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: landing-twinkle 2.8s ease-in-out infinite;
+}
+
+.landing-twinkle-delay {
+  animation-delay: -1.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-float,
+  .landing-twinkle {
+    animation: none;
+  }
+}
